@@ -82,6 +82,7 @@ for epoch in range(10):
         images = images.to(device)
         labels = labels.to(device)
         outputs = cnn(images)
+        print(labels)
         loss_test += loss_func(outputs, labels)
         _, pred = outputs.max(1)
         accuracy += (pred == labels).sum().item()
