@@ -40,12 +40,25 @@ def default_loader(path):
 train_transform = transforms.Compose([
     transforms.RandomResizedCrop((28, 28)),
     transforms.RandomHorizontalFlip(),
-    transforms.RandomVerticalFlip(),
-    transforms.RandomRotation(90),
-    transforms.RandomGrayscale(0.1),
-    transforms.ColorJitter(0.3, 0.3, 0.3, 0.3),
     transforms.ToTensor()
 ])
+
+
+test_transform = transforms.Compose([
+    transforms.RandomResizedCrop((28, 28)),
+    transforms.ToTensor()
+])
+
+
+# train_transform = transforms.Compose([
+#     transforms.RandomResizedCrop((28, 28)),
+#     transforms.RandomHorizontalFlip(),
+#     transforms.RandomVerticalFlip(),
+#     transforms.RandomRotation(90),
+#     transforms.RandomGrayscale(0.1),
+#     transforms.ColorJitter(0.3, 0.3, 0.3, 0.3),
+#     transforms.ToTensor()
+# ])
 
 class MyDataset(Dataset):
     def __init__(self, im_list, transform:None, loader = default_loader):
@@ -78,11 +91,11 @@ im_train_list = glob.glob("/Users/yifanxu/Programming/ML/Pytorch/Cifar-10/python
 im_test_list = glob.glob("/Users/yifanxu/Programming/ML/Pytorch/Cifar-10/pythonProject1/data/cifar-10-batches-py/test/*/*.png")
 
 train_dataset = MyDataset(im_train_list, transform=train_transform)
-test_dataset = MyDataset(im_test_list, transform=transforms.ToTensor())
+test_dataset = MyDataset(im_test_list, transform=test_transform)
 
 
-train_data_loader = DataLoader(dataset=train_dataset, batch_size=6, shuffle=True, num_workers=4)
-test_data_loader = DataLoader(dataset=test_dataset, batch_size=6, shuffle=False, num_workers=4)
+train_data_loader = DataLoader(dataset=train_dataset, batch_size=6, shuffle=True)
+test_data_loader = DataLoader(dataset=test_dataset, batch_size=6, shuffle=False)
 
 print("num of train", len(train_dataset))
 print("num of test", len(test_dataset))
