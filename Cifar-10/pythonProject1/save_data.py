@@ -2,7 +2,7 @@ import pickle
 import os
 import cv2
 import numpy as np
-
+from setuptools.sandbox import save_path
 
 
 def unpickle(file):
@@ -24,7 +24,8 @@ label_name = ["airplane",
 
 import glob
 
-train_list = glob.glob("/Users/yifanxu/Programming/ML/Pytorch/Cifar-10/pythonProject1/data/cifar-10-batches-py/data_batch_*")
+train_list = glob.glob("/Users/yifanxu/Programming/ML/Pytorch/Cifar-10/pythonProject1/data/cifar-10-batches-py/test_batch*")
+save_path = "/Users/yifanxu/Programming/ML/Pytorch/Cifar-10/pythonProject1/data/cifar-10-batches-py/test"
 print(train_list)
 
 for l in train_list:
@@ -46,3 +47,7 @@ for l in train_list:
 
         im_data = np.transpose(im_data, (1, 2, 0))
 
+        if not os.path.exists("{}/{}".format(save_path, im_label_name)):
+            os.mkdir("{}/{}".format(save_path, im_label_name))
+
+        cv2.imwrite("{}/{}/{}".format(save_path, im_label_name, im_name.decode('utf-8')), im_data)
